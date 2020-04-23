@@ -23,10 +23,11 @@ int pinFan = 4;
 int pinHeat = A0;
 int pinRes = 5;
 
+String readString;
+
 const int STANDBY = 1;
 const int WORKING = 2;
 const int READY = 3;
-
 
 
 void setup()
@@ -48,32 +49,54 @@ void setup()
 
 void loop()
 {
+  String tempUserString ="";
   int readOK = 0;
   //detecter la temperature
   float temperatureMug = lectureTemp();
 
   //afficher la temperature
-  Serial.println(" la temperature est de " + String(temperatureMug));
-  Serial.write("°C");
+  Serial.print(" la temperature est de " + String(temperatureMug));
+  Serial.println(" degres C");
   delay(50);
 
-  //attendre input utilisateur (ici, deux caractères via numpad)
-  while(readOK == 0){
-    int tempUser = Serial.read();//TODO
-    Serial.println("la temperature saisie est" + tempUser);
-    delay(500);
-  }
-  readOK = 1;
-  
+  //attendre input utilisateur (ici, deux caractères via console)
+  Serial.println("Rentrez la température voulue : ");
+  int userTemp = getUserTemp();
 
   //allumer ventilateur OU allumer resistance
-
+  if((float)userTemp < temperatureMug){
+    digitalWrite(pinFan, HIGH);
+    digitalWrite(pinRes, LOW);
+    
   //allumer led statut en rouge
   setLedStatus(WORKING);
+    
+  }
+  else if((float)userTemp > temperatureMug){
+    digitalWrite(pinRes, HIGH);
+    digitalWrite(pinFan, LOW);
+    
+  //allumer led statut en rouge
+  setLedStatus(WORKING);
+    
+  }
+  else{
+    
+  //allumer led statut en vert
+  setLedStatus(READY);
+  }
+  
+  while((float)userTemp > temperatureMug || (float)userTemp > temperatureMug){
+    temperatureMug = lectureTemp();
+    if(temperatureMug > 60){
+      Serial.println("ERROR : temperature trop elevé");
+    }
+  }
 
   //atteindre bonne température
   //allumer led en vert pendant 2 minutes
   setLedStatus(READY);
+  delay(2000);
   //allumer led en bleu
   setLedStatus(STANDBY);
 }
@@ -114,4 +137,28 @@ float lectureTemp(){
   	float temperature = (volt - 0.5) * 100 ;
   	return temperature;
 }
+
+int getUserTemp(){
+  int n;
+  int hasReceivedValue = 0;
+  while(hasReceivedValue == 0){
+    while (Serial.available()) {
+      char c = Serial.read();  //gets one byte from serial buffer
+      readString += c; //makes the String readString
+      delay(2);  //slow looping to allow buffer to fill with next character
+    }
+
+    if (readString.length() >0) {
+      Serial.println(readString);  //so you can see the captured String
+      n = readString.toInt();  //convert readString into a number
+      Serial.print("tempereature : ");
+      Serial.println(n);
+      readString="";
+      hasReceivedValue = 1;
+    }
+  } 
+  return n;
+}
+
+
 
