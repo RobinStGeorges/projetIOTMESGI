@@ -1,0 +1,117 @@
+/*    attention 
+
+Du au limitations de tinkerCad, certains composants on été
+remplacés par d'autres solution pour les test :
+detection RFID : intérupteur glissière
+envoie de donnée via smartphone : pavé numérique
+affichage donnée sur smartphone : console
+ventillateur : led bleu
+resistance chauffante : led rouge
+
+*/
+#include <Adafruit_NeoPixel.h>
+
+#define PIN 5	 // input pin Neopixel is attached to
+
+#define NUMPIXELS      12 // number of neopixels in strip
+
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+
+
+int pinFan = 4;
+int pinHeat = A0;
+int pinRes = 5;
+
+const int STANDBY = 1;
+const int WORKING = 2;
+const int READY = 3;
+
+
+
+void setup()
+{
+  Serial.begin(9600);
+  
+  pinMode(pinFan, OUTPUT);
+  pinMode(pinRes, OUTPUT);
+  pinMode(pinHeat, INPUT);
+  
+  digitalWrite(pinFan, LOW);
+  digitalWrite(pinRes, LOW);
+  
+  //Passer led statut a bleue
+  setLedStatus(STANDBY);
+  
+  
+}
+
+void loop()
+{
+  int readOK = 0;
+  //detecter la temperature
+  float temperatureMug = lectureTemp();
+
+  //afficher la temperature
+  Serial.println(" la temperature est de " + String(temperatureMug));
+  Serial.write("°C");
+  delay(50);
+
+  //attendre input utilisateur (ici, deux caractères via numpad)
+  while(readOK == 0){
+    int tempUser = Serial.read();//TODO
+    Serial.println("la temperature saisie est" + tempUser);
+    delay(500);
+  }
+  readOK = 1;
+  
+
+  //allumer ventilateur OU allumer resistance
+
+  //allumer led statut en rouge
+  setLedStatus(WORKING);
+
+  //atteindre bonne température
+  //allumer led en vert pendant 2 minutes
+  setLedStatus(READY);
+  //allumer led en bleu
+  setLedStatus(STANDBY);
+}
+
+int getTemp(){
+	return analogRead(pinHeat);
+}
+
+void setLedStatus(int status){
+  Serial.println("setting status led");
+  switch (status) {
+  case STANDBY://bleu
+  for (int i=0; i < NUMPIXELS; i++) {
+	pixels.setPixelColor(i, pixels.Color(0, 0, 255));
+  }
+    break;
+  case WORKING://red
+    for (int i=0; i < NUMPIXELS; i++) {
+		pixels.setPixelColor(i, pixels.Color(255, 0, 0));
+  	}
+    break;
+   case READY://green
+    for (int i=0; i < NUMPIXELS; i++) {
+		pixels.setPixelColor(i, pixels.Color(0, 255, 0));
+  	}
+    break;
+  default:
+    break;
+	}
+  pixels.show();
+  
+}
+
+float lectureTemp(){
+  	int reading = analogRead(A0);  
+	float volt = reading * 5.0;
+ 	volt = volt / 1024.0; 
+  	float temperature = (volt - 0.5) * 100 ;
+  	return temperature;
+}
+
