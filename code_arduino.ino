@@ -21,7 +21,7 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ80
 
 int pinFan = 4;
 int pinHeat = A0;
-int pinRes = 5;
+int pinRes = 2;
 
 String readString;
 
@@ -88,21 +88,25 @@ void loop()
   
   while((float)userTemp > temperatureMug || (float)userTemp > temperatureMug){
     temperatureMug = lectureTemp();
+    Serial.print(" temperature du mug : ");
+    Serial.print(temperatureMug);
+    Serial.println(" degrès celcius ");
+    
     if(temperatureMug > 60){
       Serial.println("ERROR : temperature trop elevé");
     }
   }
+  
+  //temperature OK, eteindre les composants
+  digitalWrite(pinRes, LOW);
+  digitalWrite(pinFan, LOW);
 
   //atteindre bonne température
   //allumer led en vert pendant 2 minutes
   setLedStatus(READY);
-  delay(2000);
+  delay(8000);
   //allumer led en bleu
   setLedStatus(STANDBY);
-}
-
-int getTemp(){
-	return analogRead(pinHeat);
 }
 
 void setLedStatus(int status){
