@@ -27,7 +27,6 @@ This system is made to heat or cool down liquids.
 
 #### LED RGB
 
-![61FDZg8N3kL _AC_SL1500_](https://user-images.githubusercontent.com/25655382/80114182-89f58380-8583-11ea-8ff6-9e2323bec19a.jpg)
 
 
 #### Capteur de Température
