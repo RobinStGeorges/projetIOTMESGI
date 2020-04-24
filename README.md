@@ -13,8 +13,8 @@ The box connect to a mug through either an adapter or directly to the mug. Our m
 
 ## Hardware
 
-#### Arduino Uno R3
-![a000066_featured_4](https://user-images.githubusercontent.com/25655382/80113931-34b97200-8583-11ea-9a97-de5afb1e4386.jpg)
+#### Arduino Nano
+![ArduinoNano](https://user-images.githubusercontent.com/25655382/80193736-a643ff80-8619-11ea-9a15-a2dd49cb21b1.JPG)
 
 #### BreadBoard
 
