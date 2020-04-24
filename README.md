@@ -28,6 +28,9 @@ The box connect to a mug through either an adapter or directly to the mug. Our m
 
 ![interrupteurGlissiere](https://user-images.githubusercontent.com/25655382/80114142-7b0ed100-8583-11ea-9df4-b39672bf626c.jpg)
 
+#### HC-05 Bluetooth Module
+
+![61pby065esl__sx679__tNr8sYwW5D](https://user-images.githubusercontent.com/25655382/80210404-047ddc00-8634-11ea-93fe-0a63779e26b9.png)
 
 #### LED RGB
 
