@@ -55,12 +55,12 @@ The box connect to a mug through either an adapter or directly to the mug. Our m
 * Arduino IDE : available her https://www.arduino.cc/en/main/software
 
 ## Cabling
-
-Due to tinkerCad's restriction,some components have been replaced by others to make it work and for tests purposes :
-detection RFID : intérupteur glissière
-envoie de donnée via smartphone : simulé par la console
-affichage donnée sur smartphone : console
-ventillateur : led bleu
+We simulated the cabling using the TinkerCad application in order to show how the components work together and their cabling.<br/>
+However, due to tinkerCad's restriction,some components have been replaced by others to make it work and for tests purposes :<br/>
+detection RFID : intérupteur glissière<br/>
+envoie de donnée via smartphone : simulé par la console<br/>
+affichage donnée sur smartphone : console<br/>
+ventillateur : led bleu<br/>
 resistance chauffante : led rouge
 
 ![cabling](https://user-images.githubusercontent.com/25655382/80202760-6899a380-8626-11ea-8f33-26cafc6183d8.JPG)
