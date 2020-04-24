@@ -1,10 +1,10 @@
 /*    attention 
 
-Du au limitations de tinkerCad, certains composants on été
-remplacés par d'autres solution pour les test :
-detection RFID : intérupteur glissière
-envoie de donnée via smartphone : pavé numérique
-affichage donnée sur smartphone : console
+Du au limitations de tinkerCad, certains composants on Ã©tÃ©
+remplacÃ©s par d'autres solution pour les test :
+detection RFID : intÃ©rupteur glissiÃ¨re
+envoie de donnÃ©e via smartphone : simulÃ© par la console
+affichage donnÃ©e sur smartphone : console
 ventillateur : led bleu
 resistance chauffante : led rouge
 
@@ -17,7 +17,8 @@ resistance chauffante : led rouge
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-
+int pinRFID = 3;
+int buttonState = 0;
 
 int pinFan = 4;
 int pinHeat = A0;
@@ -29,6 +30,12 @@ const int STANDBY = 1;
 const int WORKING = 2;
 const int READY = 3;
 
+int batteryValue = 0;
+float batteryVoltage;
+float batteryPerc;
+
+int userTemp =37;
+
 
 void setup()
 {
@@ -37,6 +44,8 @@ void setup()
   pinMode(pinFan, OUTPUT);
   pinMode(pinRes, OUTPUT);
   pinMode(pinHeat, INPUT);
+  
+  pinMode(pinRFID, INPUT);
   
   digitalWrite(pinFan, LOW);
   digitalWrite(pinRes, LOW);
@@ -49,64 +58,85 @@ void setup()
 
 void loop()
 {
-  String tempUserString ="";
-  int readOK = 0;
-  //detecter la temperature
-  float temperatureMug = lectureTemp();
+  buttonState = digitalRead(pinRFID);
+  if(buttonState == HIGH){
+    
+    // Calcul du pourcentage de la batterie
+    batteryValue = analogRead(A1);
+    batteryVoltage = batteryValue * (5.0/1023);
+    batteryPerc = constrain(map(batteryVoltage,0,5,0,100),0,255);
+    Serial.print("Voltage de la batterie = ");
+    Serial.print(batteryVoltage);
+    Serial.println("v");
+    Serial.print("Niveau de la batterie = ");
+    Serial.print(batteryPerc);
+    Serial.println("%");
+    delay(50);
 
-  //afficher la temperature
-  Serial.print(" la temperature est de " + String(temperatureMug));
-  Serial.println(" degres C");
-  delay(50);
+    String tempUserString ="";
+    int readOK = 0;
+    //detecter la temperature
+    float temperatureMug = lectureTemp();
 
-  //attendre input utilisateur (ici, deux caractères via console)
-  Serial.println("Rentrez la température voulue : ");
-  int userTemp = getUserTemp();
+    //afficher la temperature
+    Serial.print(" la temperature du mug est de " + String(temperatureMug));
+    Serial.println(" degres C");
+    delay(50);
 
-  //allumer ventilateur OU allumer resistance
-  if((float)userTemp < temperatureMug){
-    digitalWrite(pinFan, HIGH);
+    //attendre input utilisateur (ici, deux caractÃ¨res via console)
+    Serial.println("Rentrez la tempÃ©rature voulue : ");
+    userTemp = getUserTemp();
+
+    //allumer ventilateur 
+    if((float)userTemp < temperatureMug){
+      digitalWrite(pinFan, HIGH);
+      digitalWrite(pinRes, LOW);
+
+    //allumer led statut en rouge
+    setLedStatus(WORKING);
+
+    }
+    //allumer resistance
+    else if((float)userTemp > temperatureMug){
+      digitalWrite(pinRes, HIGH);
+      digitalWrite(pinFan, LOW);
+
+    //allumer led statut en rouge
+    setLedStatus(WORKING);
+
+    }
+    else{
+
+    //allumer led statut en vert
+    setLedStatus(READY);
+    }
+
+    while((float)userTemp > temperatureMug || (float)userTemp > temperatureMug){
+      temperatureMug = lectureTemp();
+      Serial.print(" temperature du mug : ");
+      Serial.print(temperatureMug);
+      Serial.println(" degrÃ¨s celcius ");
+
+      if(temperatureMug > 60){
+        Serial.println("ERROR : temperature trop elevÃ©");
+      }
+    }
+
+    //temperature OK, eteindre les composants
     digitalWrite(pinRes, LOW);
-    
-  //allumer led statut en rouge
-  setLedStatus(WORKING);
-    
-  }
-  else if((float)userTemp > temperatureMug){
-    digitalWrite(pinRes, HIGH);
     digitalWrite(pinFan, LOW);
-    
-  //allumer led statut en rouge
-  setLedStatus(WORKING);
-    
+
+    //atteindre bonne tempÃ©rature
+    //allumer led en vert pendant 2 minutes
+    setLedStatus(READY);
+    delay(8000);
+    //allumer led en bleu
+    setLedStatus(STANDBY);
   }
   else{
-    
-  //allumer led statut en vert
-  setLedStatus(READY);
+  	Serial.println("RFID non detectÃ©");
+    delay(800);
   }
-  
-  while((float)userTemp > temperatureMug || (float)userTemp > temperatureMug){
-    temperatureMug = lectureTemp();
-    Serial.print(" temperature du mug : ");
-    Serial.print(temperatureMug);
-    Serial.println(" degrès celcius ");
-    
-    if(temperatureMug > 60){
-      Serial.println("ERROR : temperature trop elevé");
-    }
-  }
-  
-  //temperature OK, eteindre les composants
-  digitalWrite(pinRes, LOW);
-  digitalWrite(pinFan, LOW);
-
-  //atteindre bonne température
-  //allumer led en vert pendant 2 minutes
-  setLedStatus(READY);
-  delay(8000);
-  //allumer led en bleu
-  setLedStatus(STANDBY);
 }
 
 void setLedStatus(int status){
