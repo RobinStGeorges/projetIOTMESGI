@@ -69,3 +69,7 @@ ventillateur : led bleu<br/>
 resistance chauffante : led rouge
 
 ![cabling](https://user-images.githubusercontent.com/25655382/80202760-6899a380-8626-11ea-8f33-26cafc6183d8.JPG)
+
+## Assembly
+
+* Simulation : https://youtu.be/_Lxjz8glMkU
