@@ -31,7 +31,7 @@ This system is made to heat or cool down liquids.
 
 #### Capteur de Température
 
-![Capteur Temp](https://user-images.githubusercontent.com/25655382/80186823-e782e200-860e-11ea-92b6-687404cafa3a.jpg)
+![temp](https://user-images.githubusercontent.com/25655382/80186901-0d0feb80-860f-11ea-951f-9e281f355958.png)
 
 
 #### Ventilateur
