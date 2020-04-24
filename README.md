@@ -36,6 +36,9 @@ The box connect to a mug through either an adapter or directly to the mug. Our m
 
 ![led](https://user-images.githubusercontent.com/25655382/80186229-f74df680-860d-11ea-9b78-7f4f9fb941c9.JPG)
 
+#### 12 NEOPIXEL
+![led]()
+
 
 #### Capteur de Température
 
