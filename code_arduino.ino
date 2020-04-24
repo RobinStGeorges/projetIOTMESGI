@@ -58,6 +58,7 @@ void setup()
 
 void loop()
 {
+  Serial.println("Cheaking RFID");
   buttonState = digitalRead(pinRFID);
   if(buttonState == HIGH){
     
@@ -73,8 +74,6 @@ void loop()
     Serial.println("%");
     delay(50);
 
-    String tempUserString ="";
-    int readOK = 0;
     //detecter la temperature
     float temperatureMug = lectureTemp();
 
@@ -86,29 +85,26 @@ void loop()
     //attendre input utilisateur (ici, deux caractères via console)
     Serial.println("Rentrez la température voulue : ");
     userTemp = getUserTemp();
+    Serial.print("temperature rentré : ");
+    Serial.print(userTemp);
+    Serial.println(" °C ");
 
     //allumer ventilateur 
     if((float)userTemp < temperatureMug){
       digitalWrite(pinFan, HIGH);
       digitalWrite(pinRes, LOW);
 
-    //allumer led statut en rouge
-    setLedStatus(WORKING);
-
+      //allumer led statut en rouge
+      setLedStatus(WORKING);
     }
+
     //allumer resistance
-    else if((float)userTemp > temperatureMug){
+    if((float)userTemp > temperatureMug){
       digitalWrite(pinRes, HIGH);
       digitalWrite(pinFan, LOW);
 
-    //allumer led statut en rouge
-    setLedStatus(WORKING);
-
-    }
-    else{
-
-    //allumer led statut en vert
-    setLedStatus(READY);
+      //allumer led statut en rouge
+      setLedStatus(WORKING);
     }
 
     while((float)userTemp > temperatureMug || (float)userTemp > temperatureMug){
@@ -142,34 +138,33 @@ void loop()
 void setLedStatus(int status){
   Serial.println("setting status led");
   switch (status) {
-  case STANDBY://bleu
-  for (int i=0; i < NUMPIXELS; i++) {
-	pixels.setPixelColor(i, pixels.Color(0, 0, 255));
-  }
-    break;
-  case WORKING://red
-    for (int i=0; i < NUMPIXELS; i++) {
-		pixels.setPixelColor(i, pixels.Color(255, 0, 0));
-  	}
-    break;
-   case READY://green
-    for (int i=0; i < NUMPIXELS; i++) {
-		pixels.setPixelColor(i, pixels.Color(0, 255, 0));
-  	}
-    break;
-  default:
-    break;
+    case STANDBY://bleu
+      for (int i=0; i < NUMPIXELS; i++) {
+      pixels.setPixelColor(i, pixels.Color(0, 0, 255));
+      }
+      break;
+    case WORKING://red
+      for (int i=0; i < NUMPIXELS; i++) {
+      pixels.setPixelColor(i, pixels.Color(255, 0, 0));
+      }
+      break;
+    case READY://green
+      for (int i=0; i < NUMPIXELS; i++) {
+      pixels.setPixelColor(i, pixels.Color(0, 255, 0));
+      }
+      break;
+    default:
+      break;
 	}
   pixels.show();
-  
 }
 
 float lectureTemp(){
-  	int reading = analogRead(A0);  
+  int reading = analogRead(A0);  
 	float volt = reading * 5.0;
  	volt = volt / 1024.0; 
-  	float temperature = (volt - 0.5) * 100 ;
-  	return temperature;
+  float temperature = (volt - 0.5) * 100 ;
+  return temperature;
 }
 
 int getUserTemp(){
@@ -193,6 +188,3 @@ int getUserTemp(){
   } 
   return n;
 }
-
-
-
