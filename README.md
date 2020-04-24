@@ -22,6 +22,8 @@ The box connect to a mug through either an adapter or directly to the mug. Our m
 
 #### Résistance 
 
+![1280px-3_Resistors](https://user-images.githubusercontent.com/25655382/80209985-3f334480-8633-11ea-865c-0b81b504f60f.jpg)
+
 #### Interrupteur Glissière
 
 ![interrupteurGlissiere](https://user-images.githubusercontent.com/25655382/80114142-7b0ed100-8583-11ea-9df4-b39672bf626c.jpg)
