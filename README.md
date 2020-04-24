@@ -6,7 +6,10 @@
 The system enables its user to either heat or cool down the content of an object. Thanks to its electrical system (heat resistance or ventilation) the wall of any object that sustain heat or cold will be adjusted. With the help of an interface, the user will be able to control the temperature of the object it is attached to and insert the temperature needed he would like. 
 This system is made to heat or cool down liquids. 
 
+
 ## How it works
+
+The box connect to a mug through either an adapter or directly to the mug. Our mugs are specialised to accomodate to the device. Once connected, there is a ligh signal to notice its user it is connected. Through an interface, the user is able to set the temperature he would like for his liquid to be heated or cool down.The system will automatically be turned down when the temperature set is reached or if the user forgets his mug set on on.
 
 ## Hardware
 
@@ -48,6 +51,8 @@ This system is made to heat or cool down liquids.
 ![Chargelipo](https://user-images.githubusercontent.com/25655382/80189605-37fc3e80-8613-11ea-9994-03f85e14e3ff.JPG)
 
 ## Software 
+
+* Arduino IDE : available her https://www.arduino.cc/en/main/software
 
 ## Cabling
 
