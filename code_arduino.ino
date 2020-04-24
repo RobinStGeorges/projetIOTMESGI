@@ -96,27 +96,36 @@ void loop()
 
       //allumer led statut en rouge
       setLedStatus(WORKING);
-    }
-
-    //allumer resistance
-    if((float)userTemp > temperatureMug){
-      digitalWrite(pinRes, HIGH);
-      digitalWrite(pinFan, LOW);
-
-      //allumer led statut en rouge
-      setLedStatus(WORKING);
-    }
-
-    while((float)userTemp > temperatureMug || (float)userTemp > temperatureMug){
+      while((float)userTemp < temperatureMug ){
       temperatureMug = lectureTemp();
       Serial.print(" temperature du mug : ");
       Serial.print(temperatureMug);
       Serial.println(" degrès celcius ");
+      }
+
+    }
+    //allumer resistance
+    else if((float)userTemp > temperatureMug){
+      digitalWrite(pinRes, HIGH);
+      digitalWrite(pinFan, LOW);
+
+    //allumer led statut en rouge
+    setLedStatus(WORKING);
+      
+      while((float)userTemp > temperatureMug){
+        temperatureMug = lectureTemp();
+        Serial.print(" temperature du mug : ");
+        Serial.print(temperatureMug);
+        Serial.println(" degrès celcius ");
 
       if(temperatureMug > 60){
         Serial.println("ERROR : temperature trop elevé");
       }
     }
+
+    }
+
+
 
     //temperature OK, eteindre les composants
     digitalWrite(pinRes, LOW);
@@ -138,33 +147,34 @@ void loop()
 void setLedStatus(int status){
   Serial.println("setting status led");
   switch (status) {
-    case STANDBY://bleu
-      for (int i=0; i < NUMPIXELS; i++) {
-      pixels.setPixelColor(i, pixels.Color(0, 0, 255));
-      }
-      break;
-    case WORKING://red
-      for (int i=0; i < NUMPIXELS; i++) {
-      pixels.setPixelColor(i, pixels.Color(255, 0, 0));
-      }
-      break;
-    case READY://green
-      for (int i=0; i < NUMPIXELS; i++) {
-      pixels.setPixelColor(i, pixels.Color(0, 255, 0));
-      }
-      break;
-    default:
-      break;
+  case STANDBY://bleu
+  for (int i=0; i < NUMPIXELS; i++) {
+	pixels.setPixelColor(i, pixels.Color(0, 0, 255));
+  }
+    break;
+  case WORKING://red
+    for (int i=0; i < NUMPIXELS; i++) {
+		pixels.setPixelColor(i, pixels.Color(255, 0, 0));
+  	}
+    break;
+   case READY://green
+    for (int i=0; i < NUMPIXELS; i++) {
+		pixels.setPixelColor(i, pixels.Color(0, 255, 0));
+  	}
+    break;
+  default:
+    break;
 	}
   pixels.show();
+  
 }
 
 float lectureTemp(){
-  int reading = analogRead(A0);  
+  	int reading = analogRead(A0);  
 	float volt = reading * 5.0;
  	volt = volt / 1024.0; 
-  float temperature = (volt - 0.5) * 100 ;
-  return temperature;
+  	float temperature = (volt - 0.5) * 100 ;
+  	return temperature;
 }
 
 int getUserTemp(){
@@ -188,3 +198,6 @@ int getUserTemp(){
   } 
   return n;
 }
+
+
+
