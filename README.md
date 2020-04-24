@@ -40,8 +40,7 @@ This system is made to heat or cool down liquids.
 
 
 #### Resistance Chauffante 
-![61ksLhWC20L _AC_SL1000_](https://user-images.githubusercontent.com/25655382/80114329-ba3d2200-8583-11ea-8c6a-83cda1ba6c79.jpg)
-
+![61ksLhWC20L _AC_SL1000_](https://user-images.githubusercontent.com/25655382/80187267-a0492100-860f-11ea-9d12-52c5d51957d7.jpg)
 
 ## Software 
 
