@@ -41,6 +41,12 @@ This system is made to heat or cool down liquids.
 #### Resistance Chauffante 
 ![61ksLhWC20L _AC_SL1000_](https://user-images.githubusercontent.com/25655382/80187267-a0492100-860f-11ea-9d12-52c5d51957d7.jpg)
 
+### Lipo
+![lipo](https://user-images.githubusercontent.com/25655382/80189469-fec3ce80-8612-11ea-9600-cc7c2eea8839.JPG)
+
+### Charge lipo
+![Chargelipo](https://user-images.githubusercontent.com/25655382/80189605-37fc3e80-8613-11ea-9994-03f85e14e3ff.JPG)
+
 ## Software 
 
 ## Cabling
