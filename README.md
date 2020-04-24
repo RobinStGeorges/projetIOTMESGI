@@ -32,9 +32,9 @@ The box connect to a mug through either an adapter or directly to the mug. Our m
 
 ![61pby065esl__sx679__tNr8sYwW5D](https://user-images.githubusercontent.com/25655382/80210404-047ddc00-8634-11ea-93fe-0a63779e26b9.png)
 
-#### LED RGB
+#### Neopixel (12)
 
-![led](https://user-images.githubusercontent.com/25655382/80186229-f74df680-860d-11ea-9b78-7f4f9fb941c9.JPG)
+![](https://cdn.discordapp.com/attachments/701813803628626010/703234373280989254/ar-anneau-neopixel-12-leds-rgb-ada1643-22875.jpg)
 
 #### 12 NEOPIXEL
 ![led]()
